@@ -4,35 +4,13 @@
 // 
 var App = React.createClass({displayName: "App",
 
-  getInitialState: function() {
-    return { favorites: [] }
-  },
-
   render: function() {
     return (
       React.createElement("div", null, 
-        React.createElement(List, {
-          onFavorite: this.onFavorite, 
-          favorites: this.state.favorites}), 
-        React.createElement(Tray, {
-          onRemoveFavorite: this.onRemoveFavorite, 
-          favorites: this.state.favorites})
+        React.createElement(List, null), 
+        React.createElement(Tray, null)
       )
     )
-  },
-
-  onFavorite: function(kitten) {
-    var self = this;
-    return function() {
-      self.setState({ favorites: self.state.favorites.concat(kitten) });
-    }
-  },
-
-  onRemoveFavorite: function(kitten) {
-    var self = this;
-    return function() {
-      self.setState({ favorites: _.without(self.state.favorites, kitten) });
-    }
   }
 });
 
@@ -42,7 +20,7 @@ var App = React.createClass({displayName: "App",
 var List = React.createClass({displayName: "List",
 
   getInitialState: function() {
-    return { kittens: [] }
+    return { kittens: [], favorites: [] }
   },
 
   componentDidMount: function() {
@@ -52,11 +30,11 @@ var List = React.createClass({displayName: "List",
   render: function() {
     var self = this;
     var li = function(kitten) {
-      var isFavorited = _.findWhere(self.props.favorites, { id: kitten.id });
+      var isFavorited = _.findWhere(self.state.favorites, { id: kitten.id });
       return (
         React.createElement("li", {
           key: kitten.id, 
-          onClick: self.props.onFavorite(kitten), 
+          onClick: self.onFavorite(kitten), 
           className: isFavorited ? 'favorited' : ''
         }, 
           React.createElement("img", {src: "images/" + kitten.href + ".jpg"})
@@ -73,6 +51,13 @@ var List = React.createClass({displayName: "List",
     )
   },
 
+  onFavorite: function(kitten) {
+    var self = this;
+    return function() {
+      self.setState({ favorites: self.state.favorites.concat(kitten) });
+    }
+  },
+
   nextPage: function() {
     var kittens = _.times(30, function() {
       return _.sample(fixtures());
@@ -87,19 +72,7 @@ var List = React.createClass({displayName: "List",
 var Tray = React.createClass({displayName: "Tray",
 
   render: function() {
-    var self = this;
-    var li = function(kitten) {
-      return (
-        React.createElement("li", {onClick: self.props.onRemoveFavorite(kitten)}, 
-          React.createElement("img", {src: "images/" + kitten.href + ".jpg"})
-        )
-      );
-    };
-    return (
-      React.createElement("div", {id: "favorites-tray"}, 
-        React.createElement("ul", null, _.map(this.props.favorites, li))
-      )
-    )
+    return React.createElement("div", {id: "favorites-tray"})
   }
 });
 

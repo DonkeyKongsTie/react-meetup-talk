@@ -3,8 +3,8 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "2": "browserify -t reactify sample-2/scripts/app.jsx > sample-2/scripts/app.js",
-    "3": "browserify -t reactify sample-3/scripts/app.jsx > sample-3/scripts/app.js"
+    "2": "browserify -t reactify backbone-splash-react/scripts/app.jsx > backbone-splash-react/scripts/app.js",
+    "3": "browserify -t reactify all-react/scripts/app.jsx > all-react/scripts/app.js"
   },
   "dependencies": {
     "backbone": "^1.1.2",

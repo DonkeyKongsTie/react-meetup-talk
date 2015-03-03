@@ -19,7 +19,7 @@ var App = React.createClass({
 var List = React.createClass({
 
   getInitialState: function() {
-    return { kittens: [], favorited: [] }
+    return { kittens: [], favorites: [] }
   },
 
   componentDidMount: function() {
@@ -28,12 +28,13 @@ var List = React.createClass({
 
   render: function() {
     var self = this;
-    var li = function(kitten, index) {
+    var li = function(kitten) {
+      var isFavorited = _.findWhere(self.state.favorites, { id: kitten.id });
       return (
         <li
           key={kitten.id}
-          onClick={self.favorite(index)}
-          className={self.state.favorited.indexOf(index) >= 0 ? 'favorited' : ''}
+          onClick={self.onFavorite(kitten)}
+          className={isFavorited ? 'favorited' : ''}
         >
           <img src={"images/" + kitten.href + ".jpg"} />
         </li>
@@ -49,10 +50,10 @@ var List = React.createClass({
     )
   },
 
-  favorite: function(index) {
+  onFavorite: function(kitten) {
     var self = this;
     return function() {
-      self.setState({ favorited: self.state.favorited.concat(index) });
+      self.setState({ favorites: self.state.favorites.concat(kitten) });
     }
   },
 
