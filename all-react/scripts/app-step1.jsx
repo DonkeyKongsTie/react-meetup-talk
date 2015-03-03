@@ -24,11 +24,24 @@ var App = React.createClass({
 // 
 var List = React.createClass({
 
+  getInitialState: function() {
+    return { kittens: [] }
+  },
+
   render: function() {
+    var li = function(kitten) {
+      return (
+        <li key={kitten.id}>
+          <img src={"images/" + kitten.href + ".jpg"} />
+        </li>
+      );
+    };
     return (
       <div>
-        <div id='favorites-list'></div>
-        <button id='next-page'>Next</button>
+        <div id='favorites-list'>
+          <ul>{_.map(this.state.kittens, li)}</ul>
+        </div>
+        <button id='next-page' onClick={this.nextPage}>Next</button>
       </div>
     )
   }
