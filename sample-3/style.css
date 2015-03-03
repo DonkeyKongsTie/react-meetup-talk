@@ -1,0 +1,108 @@
+/* CSS Reset */
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video{border:0;font-size:100%;font:inherit;vertical-align:baseline;margin:0;padding:0}article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:none}table{border-collapse:collapse;border-spacing:0}
+
+body { 
+  font-family: Helvetica, Arial, sans-serif;
+  padding: 40px;
+  text-align: center;
+}
+
+h1 {
+  font-size: 26px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+#favorites-list {
+  width: 960px;
+  margin: auto;
+}
+
+#favorites-list li {
+  width: 200px;
+  height: 200px;
+  margin: 20px;
+  text-align: left;
+  display: inline-block;
+  vertical-align: top;
+  position: relative;
+}
+
+#favorites-list li.favorited img {
+  opacity: 0.2;
+}
+
+#favorites-list li.favorited::after {
+  content: 'Favorited';
+  color: green;
+  width: 100%;
+  left: 0;
+  top: 0;
+  line-height: 100px;
+  position: absolute;
+  text-align: center;
+}
+
+#favorites-list li:hover {
+  opacity: 0.5;
+  cursor: pointer;
+}
+
+#favorites-list li img {
+  max-width: 100%;
+  margin-bottom: 20px;
+}
+
+#next-page {
+  border: 1px solid #ccc;
+  background: white;
+  padding: 15px;
+  width: 920px;
+  margin: auto;
+  font-size: 14px;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-top: 60px;
+  cursor: pointer;
+  outline: none;
+}
+
+#favorites-tray {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100px;
+  background: #111;
+  padding: 10px;
+  text-align: left;
+}
+
+#favorites-tray li {
+  display: inline-block;
+  margin-right: 10px;
+  cursor: pointer;
+  position: relative;
+}
+
+#favorites-tray li:hover:after {
+  content: 'X';
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  line-height: 100px;
+  text-align: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  color: red;
+}
+
+#favorites-tray li:hover img {
+  opacity: 0.3;
+}
+
+#favorites-tray img {
+  height: 100%
+}
