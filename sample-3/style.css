@@ -58,7 +58,7 @@ h1 {
   background: white;
   padding: 15px;
   width: 920px;
-  margin: auto;
+  margin: 0 auto 200px auto;
   font-size: 14px;
   font-weight: bold;
   text-transform: uppercase;

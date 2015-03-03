@@ -4,13 +4,35 @@
 // 
 var App = React.createClass({displayName: "App",
 
+  getInitialState: function() {
+    return { favorites: [] }
+  },
+
   render: function() {
     return (
       React.createElement("div", null, 
-        React.createElement(List, null), 
-        React.createElement(Tray, null)
+        React.createElement(List, {
+          onFavorite: this.onFavorite, 
+          favorites: this.state.favorites}), 
+        React.createElement(Tray, {
+          onRemoveFavorite: this.onRemoveFavorite, 
+          favorites: this.state.favorites})
       )
     )
+  },
+
+  onFavorite: function(kitten) {
+    var self = this;
+    return function() {
+      self.setState({ favorites: self.state.favorites.concat(kitten) });
+    }
+  },
+
+  onRemoveFavorite: function(kitten) {
+    var self = this;
+    return function() {
+      self.setState({ favorites: _.without(self.state.favorites, kitten) });
+    }
   }
 });
 
@@ -28,9 +50,15 @@ var List = React.createClass({displayName: "List",
   },
 
   render: function() {
+    var self = this;
     var li = function(kitten) {
+      var isFavorited = _.findWhere(self.props.favorites, { id: kitten.id });
       return (
-        React.createElement("li", {key: kitten.id}, 
+        React.createElement("li", {
+          key: kitten.id, 
+          onClick: self.props.onFavorite(kitten), 
+          className: isFavorited ? 'favorited' : ''
+        }, 
           React.createElement("img", {src: "images/" + kitten.href + ".jpg"})
         )
       );
@@ -49,8 +77,7 @@ var List = React.createClass({displayName: "List",
     var kittens = _.times(30, function() {
       return _.sample(fixtures());
     });
-    var newKittens = this.state.kittens.concat(kittens);
-    this.setState({ kittens: newKittens });
+    this.setState({ kittens: this.state.kittens.concat(kittens) });
   }
 });
 
@@ -60,7 +87,19 @@ var List = React.createClass({displayName: "List",
 var Tray = React.createClass({displayName: "Tray",
 
   render: function() {
-    return React.createElement("div", {id: "favorites-tray"})
+    var self = this;
+    var li = function(kitten) {
+      return (
+        React.createElement("li", {onClick: self.props.onRemoveFavorite(kitten)}, 
+          React.createElement("img", {src: "images/" + kitten.href + ".jpg"})
+        )
+      );
+    };
+    return (
+      React.createElement("div", {id: "favorites-tray"}, 
+        React.createElement("ul", null, _.map(this.props.favorites, li))
+      )
+    )
   }
 });
 
